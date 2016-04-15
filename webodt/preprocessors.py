@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.utils.importlib import import_module
+try:
+    # Django versions >= 1.9
+    from importlib import import_module
+except ImportError:
+    # Django versions < 1.9
+    from django.utils.importlib import import_module
 from cStringIO import StringIO
 from lxml import etree
 import re
