@@ -6,8 +6,7 @@ import os, sys
 try:
     reload(sys).setdefaultencoding("UTF-8")
 except NameError:
-    from importlib import reload
-    reload(sys).setdefaultencoding("UTF-8")
+    print("Oh, it's Python3. OK")
 
 def read(fname):
     try:
