@@ -3,7 +3,11 @@
 from distutils.core import setup
 
 import os, sys
-reload(sys).setdefaultencoding("UTF-8")
+try:
+    reload(sys).setdefaultencoding("UTF-8")
+except NameError:
+    from importlib import reload
+    reload(sys).setdefaultencoding("UTF-8")
 
 def read(fname):
     try:
