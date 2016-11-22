@@ -5,7 +5,10 @@ try:
 except ImportError:
     # Django versions < 1.9
     from django.utils.importlib import import_module
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from io import StringIO
 from lxml import etree
 import re
 
