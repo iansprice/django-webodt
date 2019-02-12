@@ -14,9 +14,9 @@ import shutil
 import time
 from lxml import etree
 try:
-    from cStringIO import StringIO
+    from cStringIO import StringIO, FileIO
 except ImportError:
-    from io import StringIO
+    from io import StringIO, FileIO
 from django.template import Template
 from django.utils.encoding import smart_str
 from webodt.conf import WEBODT_TEMPLATE_PATH, WEBODT_ODF_TEMPLATE_PREPROCESSORS, WEBODT_TMP_DIR
@@ -211,19 +211,16 @@ class _UnpackedODFHandler(object):
         shutil.copytree(self.dirname, dstdir)
 
 
-class Document(file):
+class Document(FileIO):
 
-    def __init__(self, filename, mode='rb', buffering=1, delete_on_close=True):
-        file.__init__(self, filename, mode, buffering)
+    def __init__(self, filename, mode='rb', delete_on_close=True):
+        super(Document, self).__init__(name=filename, mode=mode)
+        self.name = filename
         self.delete_on_close = delete_on_close
 
     def close(self):
-        file.close(self)
         if self.delete_on_close:
-            self.delete()
-
-    def delete(self):
-        os.unlink(self.name)
+            pass
 
 
 class HTMLDocument(Document):
